@@ -54,7 +54,7 @@ class AuthController extends Controller
         ]);
       
         if ($validator->fails()) {
-            return response()->json(['error' => $validator->messages()], 400);
+            return response()->json(['message' => $validator->messages()], 400);
         }
         //entra al login
         try {
@@ -73,8 +73,10 @@ class AuthController extends Controller
         //devuelve el token
         return response()->json([
             'token' => $token,
-            'user' => Auth::user()
-        ]);
+            'user' => Auth::user(),
+            'message' => 'success',
+            'status' => 'ok'
+        ],200);
     }
     //Función para eliminar el token y desconectar al usuario
     public function logout(Request $request)
@@ -118,4 +120,57 @@ class AuthController extends Controller
         //Devuelve los datos del usuario si todo va bien. 
         return response()->json(['user' => $user]);
     }
+
+      //Función que obtiene los datos del usuario y valida si el token a expirado.
+      public function updateUser(Request $request)
+      {
+     
+          $this->validate($request, [
+              'token' => 'required'
+          ]);
+          //Realiza la autentificación
+          $user = JWTAuth::authenticate($request->token);
+          //Si no hay usuario es que el token no es valido o que ha expirado
+          if(!$user)
+              return response()->json([
+                  'message' => 'Invalid token / token expired',
+              ], 401);
+
+            //   $product=Product::find($id);
+             
+
+        try {
+            $user->update($request->all());
+            // if (!$token = JWTAuth::attempt($credentials)) {
+            //     //Credenciales incorrectas.
+            //     return response()->json([
+            //         'message' => 'Login failed',
+            //     ], 401);
+            // }
+        } catch (JWTException $e) {
+            //Error
+            return response()->json([
+                'message' => 'Error al momento de actualizar!',
+            ], 500);
+        }
+        //devuelve el token
+        return response()->json([
+           
+            'user' => Auth::user(),
+            'message' => 'Usuario actualizado Correctamente',
+            'status' => 'ok'
+        ],200);
+
+
+
+
+
+
+
+
+          //Devuelve los datos del usuario si todo va bien. 
+          return response()->json(['user' => $user]);
+      }
+
+
 }

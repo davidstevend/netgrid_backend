@@ -25,6 +25,7 @@ Route::prefix('v1')->group(function () {
     Route::group(['middleware' => ['jwt.verify']], function() {
         Route::post('logout', [AuthController::class, 'logout']);
         Route::post('get-user', [AuthController::class, 'getUser']);
+        Route::post('update-user', [AuthController::class, 'updateUser']);
         Route::post('favorites', [FavoriteController::class, 'store']);
         Route::put('favorites/{id}', [FavoriteController::class, 'update']);
         Route::delete('favorites/{id}', [FavoriteController::class, 'destroy']);

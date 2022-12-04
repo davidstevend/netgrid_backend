@@ -84,38 +84,7 @@ class FavoriteController extends Controller
      * @param  \App\Models\Product  $product
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
-    {
-        //Validación de datos
-       //Validamos los datos
-    //    $data = $request->only('ref_api');
-    //    $validator = Validator::make($data, [
-    //        'ref_api' => 'required|max:250|string',
-    //    ]);
-    //     //Si falla la validación error.
-    //     if ($validator->fails()) {
-    //         return response()->json(['error' => $validator->messages()], 400);
-    //     }
-    //     //Buscamos el producto
-    //     $product = Product::findOrfail($id);
-    //     //Actualizamos el producto.
-    //     $product->update([
-    //         'name' => $request->name,
-    //         'description' => $request->description,
-    //         'stock' => $request->stock,
-    //     ]);
-    //     //Devolvemos los datos actualizados.
-    //     return response()->json([
-    //         'message' => 'Product updated successfully',
-    //         'data' => $product
-    //     ], Response::HTTP_OK);
-    }
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  \App\Models\Product  $product
-     * @return \Illuminate\Http\Response
-     */
+ 
     public function destroy($id)
     {
         //Buscamos el producto
